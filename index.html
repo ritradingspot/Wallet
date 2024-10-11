@@ -49,14 +49,14 @@
         }
         .navbar {
             display: flex;
-            justify-content: flex-end; /* لجعل الأزرار تظهر من اليمين إلى اليسار */
+            justify-content: flex-start; /* لجعل الأزرار تظهر من اليمين إلى اليسار */
+            flex-direction: row-reverse; /* تغيير الاتجاه إلى عكسي */
             background-color: #006b9c;
             padding: 15px 0;
             position: fixed;
             bottom: 0;
             width: 100%;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            flex-direction: row; /* تأكد من أن الاتجاه هو row */
         }
         .navbar a {
             color: white;

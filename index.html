@@ -41,6 +41,47 @@
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: inline-block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #wallet-balance:hover, .currency-balance:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .currency-balance {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #333;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            width: 85%;
+            max-width: 450px;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .currency-info {
+            text-align: right;
+        }
+        .currency-logo {
+            width: 70px;
+            height: 70px;
+            background-image: url('https://i.suar.me/x5LOX/l'); /* الشعار الجديد */
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .balance-amount {
+            color: #0088cc;
+            font-size: 30px;
+        }
+        .currency-value {
+            color: #666;
+            font-size: 24px;
         }
         .logo {
             width: 120px;
@@ -49,8 +90,8 @@
         }
         .navbar {
             display: flex;
-            justify-content: flex-start; /* لجعل الأزرار تظهر من اليمين إلى اليسار */
-            flex-direction: row-reverse; /* تغيير الاتجاه إلى عكسي */
+            justify-content: flex-start;
+            flex-direction: row-reverse;
             background-color: #006b9c;
             padding: 15px 0;
             position: fixed;
@@ -76,22 +117,6 @@
             border-radius: 50px;
             padding: 10px 20px;
         }
-        .adsgram {
-            position: fixed;
-            bottom: 120px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background-image: url('https://i.suar.me/pv9oq/l');
-            background-size: cover;
-            cursor: pointer;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-        .adsgram:hover {
-            transform: scale(1.1);
-        }
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -108,21 +133,40 @@
 
     <div id="wallet-balance">Balance: 0 ADScoins</div>
 
-    <!-- Static image for visual appeal -->
-    <img src="https://i.suar.me/o496m/l" alt="Wallet Image" class="logo" style="margin-top: 20px; width: 200px; height: auto;">
-
-    <div class="adsgram" id="adsgram"></div>
+    <!-- AD Currency Balance -->
+    <div class="currency-balance">
+        <div class="currency-logo"></div>
+        <div class="currency-info">
+            <div class="balance-amount">0 AD</div>
+            <div class="currency-value">≈ $0.00</div>
+        </div>
+    </div>
 
     <script>
         let points = localStorage.getItem('points') ? parseInt(localStorage.getItem('points')) : 0;
+        let adValueInDollars = 0.05; // قيمة AD بالدولار
+
+        // تحويل النقاط إلى AD بخصم 3 أصفار
+        function convertPointsToAD(points) {
+            return points / 1000; // تحويل النقاط إلى AD
+        }
 
         // Update wallet balance
         function updateWalletBalance() {
             document.getElementById('wallet-balance').innerText = `Balance: ${points} ADScoins`;
         }
 
+        // Update AD currency value in dollars
+        function updateADBalance() {
+            let adBalance = convertPointsToAD(points); // تحويل النقاط إلى AD
+            let adInDollars = adBalance * adValueInDollars; // حساب قيمة AD بالدولار
+            document.querySelector('.balance-amount').innerText = `${adBalance.toFixed(2)} AD`;
+            document.querySelector('.currency-value').innerText = `≈ $${adInDollars.toFixed(2)}`;
+        }
+
         // Show balance on page load
         updateWalletBalance();
+        updateADBalance();
     </script>
 
     <!-- Navbar -->
